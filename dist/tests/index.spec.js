@@ -40,8 +40,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
-var index_1 = __importDefault(require("../index"));
-var request = (0, supertest_1.default)(index_1.default);
+var app_1 = __importDefault(require("../app"));
+var request = (0, supertest_1.default)(app_1.default);
 describe('Test endpoint response', function () {
     it('test hello world endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
