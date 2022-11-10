@@ -10,7 +10,7 @@ const router = Router();
 router.post('/', CreateController);
 router.get('/', ShowAllController);
 router.get('/:id', ShowOneController);
-router.delete('/',DeleteAllController)
-router.delete('/:id',DeleteOneController)
-router.patch('/:id',EditController)
+router.delete('/', DeleteAllController);
+router.delete('/:id', DeleteOneController);
+router.patch('/:id', EditController);
 export default router;
