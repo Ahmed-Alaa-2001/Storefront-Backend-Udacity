@@ -29,10 +29,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var dotenv = __importStar(require("dotenv"));
+var routes_1 = __importDefault(require("./routes"));
 dotenv.config();
 var PORT = process.env.PORT || 3000;
 var app = (0, express_1.default)();
 app.use((0, morgan_1.default)('short'));
+app.use('api', routes_1.default);
 app.get('/', function (req, res) {
     res.json({
         message: 'Hello World 🌍'
