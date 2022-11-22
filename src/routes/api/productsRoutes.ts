@@ -5,12 +5,13 @@ import ShowOneController from '../../controllers/ProductControllers/ShowOneContr
 import DeleteAllController from '../../controllers/ProductControllers/DeleteAllController'
 import DeleteOneController from '../../controllers/ProductControllers/DeleteOneController'
 import EditController from '../../controllers/ProductControllers/EditController'
+import requireAuth from "../../tests/middleware/auth";
 const router = Router();
 
-router.post('/add', CreateController);
-router.get('/showall', ShowAllController);
+router.post('/add', requireAuth,CreateController);
+router.get('/showall',ShowAllController);
 router.get('/show/:id', ShowOneController);
-router.delete('/deleteall', DeleteAllController);
-router.delete('/delete/:id', DeleteOneController);
-router.patch('/edit/:id', EditController);
+router.delete('/deleteall',requireAuth, DeleteAllController);
+router.delete('/delete/:id',requireAuth, DeleteOneController);
+router.patch('/edit/:id',requireAuth, EditController);
 export default router;

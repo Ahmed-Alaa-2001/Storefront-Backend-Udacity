@@ -4,7 +4,7 @@ export type Product = {
     id?: number | undefined;
     name: string;
     description: string;
-    price: string;
+    price: number;
     category: string;
 };
 export class ProductModel {

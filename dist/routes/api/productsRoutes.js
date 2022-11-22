@@ -16,5 +16,5 @@ router.get('/showall', ShowAllController_1.default);
 router.get('/show/:id', ShowOneController_1.default);
 router.delete('/deleteall', DeleteAllController_1.default);
 router.delete('/delete/:id', DeleteOneController_1.default);
-router.patch('edit/:id', EditController_1.default);
+router.patch('/edit/:id', EditController_1.default);
 exports.default = router;

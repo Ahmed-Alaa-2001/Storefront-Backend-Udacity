@@ -4,14 +4,14 @@ export type Product = {
     id?: number | undefined;
     name: string;
     description: string;
-    price: string;
+    price: number;
     category: string;
 };
 export type OrderProduct = {
     id?: number | undefined;
     quantity: number;
-    order_id: string;
-    product_id: string;
+    order_id: number;
+    product_id: number;
     products: Product[];
 };
 export type Order = {
@@ -23,25 +23,6 @@ export type Order = {
 };
 
 export class OrderModel{
-
-    private formatOrder(order: {
-        id?: number | undefined;
-        status: string;
-        user_id: string;
-        user_name?: string;
-        products: OrderProduct[];
-      }): Order {
-        return {
-          id: order.id,
-          status: order.status,
-          userId: +order.user_id,
-          userName: order.user_name,
-          products:
-            Array.isArray(order.products) && order.products.length > 0 && order.products[0]?.quantity
-              ? order.products
-              : []
-        };
-      }
 
     async showAll(): Promise<Order[]> {
         try {
@@ -71,7 +52,7 @@ export class OrderModel{
             const res = await connect.query(sql, [id]);
             connect.release();
             // console.log(res.rows[0].products);
-            return this.formatOrder(res.rows[0]);
+            return res.rows[0];
         } catch (err) {
             throw new Error(`Could not find product ${id}, ${err.message}`);
         }
@@ -81,6 +62,7 @@ export class OrderModel{
             const connect = await db.connect();
             const sql = 'INSERT INTO orders (user_id, status) values ($1, $2) RETURNING *';
             const res = await connect.query(sql, [order.userId, order.status]);
+            
             const ret = res.rows[0];
             connect.release();
             return {

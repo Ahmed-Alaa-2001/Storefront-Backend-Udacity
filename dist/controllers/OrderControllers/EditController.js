@@ -36,20 +36,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ProductModel_1 = require("../../models/ProductModel");
-var productModel = new ProductModel_1.ProductModel;
-var DeleteAllController = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var deleteAll, err_1;
+var OrderModel_1 = require("../../models/OrderModel");
+var orderModel = new OrderModel_1.OrderModel();
+var EditController = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var order, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4, productModel.deleteAll()];
+                return [4, orderModel.edit(req.body)];
             case 1:
-                deleteAll = _a.sent();
+                order = _a.sent();
                 res.json({
-                    data: { deleteAll: deleteAll },
-                    message: 'products deleted successfully'
+                    message: 'Order updated successfully',
+                    data: { order: order }
                 });
                 return [3, 3];
             case 2:
@@ -60,4 +60,4 @@ var DeleteAllController = function (req, res, next) { return __awaiter(void 0, v
         }
     });
 }); };
-exports.default = DeleteAllController;
+exports.default = EditController;

@@ -8,22 +8,39 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Products
 
-- Index
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products
-- [OPTIONAL] Products by category (args: product category)
+- showAll
+- showByID
+- createNewProduct [token required]
+- edit [token required]
+- deleteById [token required]
+- deleteAll [token required]
 
 #### Users
 
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- showAll [token required]
+- showByID [token required]
+- createNewUser
+- login
+- edit [token required]
+- deleteById [token required]
+- deleteAll [token required]
 
 #### Orders
 
 - Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- create [token required]
+- deleteById [token required]
+- edit [token required]
+- showById [token required]
+- showProductById in order [token required]
+
+#### orders-products
+
+- showallProducts [token required]
+- showProduct [token required]
+- create [token required]
+- delete [token required]
+- edit [token required]
 
 ## Data Shapes
 
@@ -37,6 +54,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### User
 
 - id
+- email
+- userName
 - firstName
 - lastName
 - password
@@ -44,7 +63,77 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Orders
 
 - id
+- user_id
+- status of order (active/pendding or complete)
+
+#### order_products
+
+- id
+- order id
 - id of each product in the order
 - quantity of each product in the order
-- user_id
-- status of order (active or complete)
+
+#### Database shcemas
+
+- users shema
+
+Table "public.users"
+Column | Type | Collation | Nullable | Default
+------------+------------------------+-----------+----------+-----------------------------------
+id | integer | | not null | nextval('users_id_seq'::regclass)
+email | character varying(250) | | |
+user_name | character varying(250) | | |
+first_name | character varying(250) | | not null |
+last_name | character varying(250) | | not null |
+password | character varying(250) | | not null |
+Indexes:
+"users_pkey" PRIMARY KEY, btree (id)
+"users_email_key" UNIQUE CONSTRAINT, btree (email)
+"users_user_name_key" UNIQUE CONSTRAINT, btree (user_name)
+Referenced by:
+TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
+- products schema
+
+Table "public.products"
+Column | Type | Collation | Nullable | Default
+-------------+------------------------+-----------+----------+--------------------------------------
+id | integer | | not null | nextval('products_id_seq'::regclass)
+name | character varying(50) | | not null |
+description | character varying(255) | | |
+price | integer | | not null |
+category | character varying(50) | | not null |
+Indexes:
+"products_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+
+- orders schema
+
+Table "public.orders"
+Column | Type | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+------------------------------------
+id | integer | | not null | nextval('orders_id_seq'::regclass)
+status | character varying(50) | | |
+user_id | integer | | not null |
+Indexes:
+"orders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+"orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+Referenced by:
+TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+
+- orders_product schema
+
+Table "public.order_products"
+Column | Type | Collation | Nullable | Default
+------------+---------+-----------+----------+--------------------------------------------
+id | integer | | not null | nextval('order_products_id_seq'::regclass)
+quantity | integer | | |
+product_id | integer | | not null |
+order_id | integer | | not null |
+Indexes:
+"order_products_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+"order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+"order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)

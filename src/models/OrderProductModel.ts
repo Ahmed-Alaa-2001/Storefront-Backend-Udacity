@@ -9,9 +9,9 @@ export type Product = {
 export type OrderProduct = {
     id?: number | undefined;
     quantity: number;
-    order_id: string;
-    product_id: string;
-    products: Product[];
+    order_id: number;
+    product_id: number;
+    products?: Product[];
 };
 
 export class OrderProductModel{

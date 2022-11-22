@@ -26,12 +26,17 @@ export const postLogIn = async (req: Request, res: Response,next: NextFunction) 
         const userName = req.body.user_name;
         const password = req.body.password;
         const user = await userModel.login(userName, password);
-        const token = jwt.sign({ user }, secretToken as string);
+        // console.log(user);
         if (user) {
-            return res.json({
-                data: { ...user, token },
-                message: 'user authenticated successfully'
-            });
+            const token = jwt.sign({ user }, secretToken as string);
+            // return res.json({
+            //     data: { ...user, token },
+            //     message: 'user authenticated successfully'
+            // });
+            res.json(token);
+        }
+        else {
+            res.sendStatus(401)
         }
         return res.sendStatus(401).json({
             message: 'the username and password do not match'
