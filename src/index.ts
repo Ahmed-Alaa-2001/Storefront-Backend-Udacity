@@ -11,7 +11,8 @@ const app: Application = express()
 app.use(morgan('short'))
 
 // add routing for / path
-app.use('api',routes)
+app.use(express.json());
+app.use('/api',routes)
 app.get('/', (req: Request, res: Response) => {
   res.json({
     message: 'Hello World 🌍'

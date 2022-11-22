@@ -7,10 +7,10 @@ import DeleteOneController from '../../controllers/ProductControllers/DeleteOneC
 import EditController from '../../controllers/ProductControllers/EditController'
 const router = Router();
 
-router.post('/', CreateController);
-router.get('/', ShowAllController);
-router.get('/:id', ShowOneController);
-router.delete('/', DeleteAllController);
-router.delete('/:id', DeleteOneController);
-router.patch('/:id', EditController);
+router.post('/add', CreateController);
+router.get('/showall', ShowAllController);
+router.get('/show/:id', ShowOneController);
+router.delete('/deleteall', DeleteAllController);
+router.delete('/delete/:id', DeleteOneController);
+router.patch('/edit/:id', EditController);
 export default router;

@@ -11,10 +11,10 @@ var DeleteAllController_1 = __importDefault(require("../../controllers/ProductCo
 var DeleteOneController_1 = __importDefault(require("../../controllers/ProductControllers/DeleteOneController"));
 var EditController_1 = __importDefault(require("../../controllers/ProductControllers/EditController"));
 var router = (0, express_1.Router)();
-router.post('/', CreateController_1.default);
-router.get('/', ShowAllController_1.default);
-router.get('/:id', ShowOneController_1.default);
-router.delete('/', DeleteAllController_1.default);
-router.delete('/:id', DeleteOneController_1.default);
-router.patch('/:id', EditController_1.default);
+router.post('/add', CreateController_1.default);
+router.get('/showall', ShowAllController_1.default);
+router.get('/show/:id', ShowOneController_1.default);
+router.delete('/deleteall', DeleteAllController_1.default);
+router.delete('/delete/:id', DeleteOneController_1.default);
+router.patch('edit/:id', EditController_1.default);
 exports.default = router;

@@ -37,8 +37,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ShowAllController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var showAllUsers, err_1;
     return __generator(this, function (_a) {
-        return [2];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, userModel.showAll()];
+            case 1:
+                showAllUsers = _a.sent();
+                res.json({
+                    message: 'users retrieved successfully',
+                    data: { showAllUsers: showAllUsers }
+                });
+                return [3, 3];
+            case 2:
+                err_1 = _a.sent();
+                next(err_1);
+                return [3, 3];
+            case 3: return [2];
+        }
     });
 }); };
 exports.default = ShowAllController;

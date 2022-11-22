@@ -1,15 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { Product,ProductModel } from '../../models/ProductModel';
+import {OrderModel} from '../../models/OrderModel';
 
-const productModel = new ProductModel;
+const orderModel = new OrderModel();
 const CreateController = async (req: Request, res: Response,next:NextFunction) => {
     try {
         // console.log(req.body);
-        const product:Product=await productModel.createNewProduct(req.body)
+        const order = await orderModel.create(req.body);
         res.json({
-            status: 'success',
-            data: { ...product },
-            message: 'product created successfully'
+            data: { ...order },
+            message: 'Order created'
         });
     } catch (err) {
         next(err);

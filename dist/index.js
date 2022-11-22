@@ -34,7 +34,8 @@ dotenv.config();
 var PORT = process.env.PORT || 3000;
 var app = (0, express_1.default)();
 app.use((0, morgan_1.default)('short'));
-app.use('api', routes_1.default);
+app.use(express_1.default.json());
+app.use('/api', routes_1.default);
 app.get('/', function (req, res) {
     res.json({
         message: 'Hello World 🌍'

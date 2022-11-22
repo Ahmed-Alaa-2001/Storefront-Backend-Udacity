@@ -36,9 +36,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ShowOneController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var UserModel_1 = require("../../models/UserModel");
+var userModel = new UserModel_1.UserModel;
+var ShowOneController = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, showOne, err_1;
     return __generator(this, function (_a) {
-        return [2];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = parseInt(req.params.id);
+                return [4, userModel.showByID(id)];
+            case 1:
+                showOne = _a.sent();
+                res.json({
+                    data: { showOne: showOne },
+                    message: 'user retrieved successfully'
+                });
+                return [3, 3];
+            case 2:
+                err_1 = _a.sent();
+                next(err_1);
+                return [3, 3];
+            case 3: return [2];
+        }
     });
 }); };
 exports.default = ShowOneController;

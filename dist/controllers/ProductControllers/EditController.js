@@ -36,9 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var EditController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var ProductModel_1 = require("../../models/ProductModel");
+var productModel = new ProductModel_1.ProductModel;
+var EditController = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var product, err_1;
     return __generator(this, function (_a) {
-        return [2];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, productModel.edit(req.body)];
+            case 1:
+                product = _a.sent();
+                console.log(req);
+                res.json({
+                    status: 'success',
+                    message: 'product updated successfully',
+                    data: { product: product }
+                });
+                return [3, 3];
+            case 2:
+                err_1 = _a.sent();
+                next(err_1);
+                return [3, 3];
+            case 3: return [2];
+        }
     });
 }); };
 exports.default = EditController;

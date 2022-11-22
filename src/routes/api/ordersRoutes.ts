@@ -1,16 +1,14 @@
 import { Router } from "express";
-import CreateController from '../../controllers/ProductControllers/CreateController'
-import ShowAllController from '../../controllers/ProductControllers/ShowAllController'
-import ShowOneController from '../../controllers/ProductControllers/ShowOneController'
-import DeleteAllController from '../../controllers/ProductControllers/DeleteAllController'
-import DeleteOneController from '../../controllers/ProductControllers/DeleteOneController'
-import EditController from '../../controllers/ProductControllers/EditController'
+import CreateController from '../../controllers/OrderControllers/CreateController'
+import ShowAllController from '../../controllers/OrderControllers/ShowAllController'
+import ShowOneController from '../../controllers/OrderControllers/ShowOneController'
+import DeleteOneController from '../../controllers/OrderControllers/DeleteOneController'
+import EditController from '../../controllers/OrderControllers/EditController'
 const router = Router();
 
-router.post('/', CreateController);
-router.get('/', ShowAllController);
-router.get('/:id', ShowOneController);
-router.delete('/', DeleteAllController);
-router.delete('/:id', DeleteOneController);
-router.patch('/:id', EditController);
+router.post('/add', CreateController);
+router.get('/showall', ShowAllController);
+router.get('/show/:id', ShowOneController);
+router.delete('/delete/:id', DeleteOneController);
+router.patch('/edit/:id', EditController);
 export default router;

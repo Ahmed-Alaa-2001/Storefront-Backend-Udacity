@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { ProductModel } from '../../models/ProductModel';
+import {OrderModel} from '../../models/OrderModel';
 
-const productModel = new ProductModel;
+const orderModel = new OrderModel();
+
 const ShowAllController = async (req: Request, res: Response,next:NextFunction) => {
     try {
-        const showAllproducts = await productModel.showAll();
+        const orders = await orderModel.showAll();
         res.json({
-            message: 'products retrieved successfully',
-            data: { showAllproducts }
+            data: { orders },
+            message: 'Orders retrieved'
         });
     } catch (err) {
         next(err);
