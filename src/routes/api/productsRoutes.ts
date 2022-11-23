@@ -1,10 +1,10 @@
 import { Router } from "express";
-import CreateController from '../../controllers/ProductControllers/CreateController'
-import ShowAllController from '../../controllers/ProductControllers/ShowAllController'
-import ShowOneController from '../../controllers/ProductControllers/ShowOneController'
-import DeleteAllController from '../../controllers/ProductControllers/DeleteAllController'
-import DeleteOneController from '../../controllers/ProductControllers/DeleteOneController'
-import EditController from '../../controllers/ProductControllers/EditController'
+import { CreateController } from '../../controllers/ProductController'
+import { ShowAllController } from '../../controllers/ProductController'
+import { ShowOneController } from '../../controllers/ProductController'
+import { DeleteOneController } from '../../controllers/ProductController'
+import { EditController } from '../../controllers/ProductController'
+import { DeleteAllController } from '../../controllers/ProductController'
 import requireAuth from "../../tests/middleware/auth";
 const router = Router();
 

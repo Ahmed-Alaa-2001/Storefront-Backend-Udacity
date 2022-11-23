@@ -1,9 +1,10 @@
 import { Router } from "express";
-import CreateController from '../../controllers/OrdersProductsController/CreateController'
-import ShowAllController from '../../controllers/OrdersProductsController/ShowAllController'
-import ShowOneController from '../../controllers/OrdersProductsController/ShowOneController'
-import DeleteOneController from '../../controllers/OrdersProductsController/DeleteOneController'
-import EditController from '../../controllers/OrdersProductsController/EditController'
+import { CreateController } from '../../controllers/OrdersProductsController'
+import { ShowAllController } from '../../controllers/OrdersProductsController'
+import { ShowOneController } from '../../controllers/OrdersProductsController'
+import { DeleteOneController } from '../../controllers/OrdersProductsController'
+import { EditController } from '../../controllers/OrdersProductsController'
+
 const router = Router();
 
 router.post('/add/:id', CreateController);

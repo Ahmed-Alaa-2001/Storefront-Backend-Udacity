@@ -1,10 +1,11 @@
 import { Router } from "express";
-import {postSignUp,postLogIn} from '../../controllers/UserControllers/AuthController'
-import ShowAllController from '../../controllers/UserControllers/ShowAllController'
-import ShowOneController from '../../controllers/UserControllers/ShowOneController'
-import DeleteAllController from '../../controllers/UserControllers/DeleteAllController'
-import DeleteOneController from '../../controllers/UserControllers/DeleteOneController'
-import EditController from '../../controllers/UserControllers/EditController'
+import { postSignUp } from '../../controllers/UserController'
+import { ShowAllController } from '../../controllers/UserController'
+import { ShowOneController } from '../../controllers/UserController'
+import { DeleteOneController } from '../../controllers/UserController'
+import { EditController } from '../../controllers/UserController'
+import { DeleteAllController } from '../../controllers/UserController'
+import { postLogIn } from '../../controllers/UserController'
 import bodyParser from "body-parser";
 import requireAuth from "../../tests/middleware/auth";
 const router = Router();
