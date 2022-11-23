@@ -27,12 +27,12 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Products
 
-- showAll
-- showByID
-- createNewProduct [token required]
-- edit [token required]
-- deleteById [token required]
-- deleteAll [token required]
+- showAll-->'GET'
+- showByID-->'GET'
+- createNewProduct [token required]-->'POST'
+- edit [token required]-->'PATCH'
+- deleteById [token required]'DELETE'
+- deleteAll [token required]'DELETE'
 
 #### Users
 

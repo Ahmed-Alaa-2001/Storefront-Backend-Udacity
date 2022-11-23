@@ -52,7 +52,6 @@ Now, check if Postgres has the database `storefront_dev`, if not create it:
 
 Next, you need to run the database migrations:
 
-```bash
 migrations up
 ```
 
@@ -61,7 +60,6 @@ migrations up
 
 Use the following command to run the application in using node:
 
-```bash
 npm run dev
 ```
 
