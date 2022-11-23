@@ -1,3 +1,22 @@
+**_Table of Contents_**
+
+- [API and Database Requirements](#api-and-database-requirements)
+  - [API Endpoints](#api-endpoints)
+    - [Users](#users)
+    - [Products](#products)
+    - [Orders](#orders)
+    - [orders-products](#order-products)
+  - [Data Schema](#data-schema)
+    - [Products Schema](#products-schema)
+    - [Users Schema](#users-schema)
+    - [Orders Schema](#orders-schema)
+    - [orders-products](#products-for-each-order-schema)
+  - [Data Shapes](#data-shapes)
+    - [User](#user)
+    - [Product](#product)
+    - [Order](#order)
+    - [orders-products](#order-product)
+
 # API Requirements
 
 The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
@@ -17,30 +36,32 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Users
 
-- showAll [token required]
-- showByID [token required]
-- createNewUser
-- login
-- edit [token required]
-- deleteById [token required]
-- deleteAll [token required]
+- Endpoint:- `/api/users/`
+
+- showAll [token required] -->'GET'
+- showByID [token required]-->'GET'
+- createNewUser-->'POST'
+- login-->'POST'
+- edit [token required]-->'PATCH'
+- deleteById [token required]-->'DELETE'
+- deleteAll [token required]-->'DELETE'
 
 #### Orders
 
-- Current Order by user (args: user id)[token required]
-- create [token required]
-- deleteById [token required]
-- edit [token required]
-- showById [token required]
-- showProductById in order [token required]
+- (OrderByUserId)Current Order by user (args: user id)[token required]
+- create [token required]-->'POST'
+- deleteById [token required]-->'DELETE'
+- edit [token required]-->'PATCH'
+- showById [token required]-->'GET'
+- showProductById in order [token required]-->'GET'
 
 #### orders-products
 
-- showallProducts [token required]
-- showProduct [token required]
-- create [token required]
-- delete [token required]
-- edit [token required]
+- showallProducts [token required]-->'GET'
+- showProduct [token required]-->'GET'
+- create [token required]-->'POST'
+- delete [token required]-->'DELETE'
+- edit [token required]-->'PATCH'
 
 ## Data Shapes
 
@@ -64,7 +85,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 - id
 - user_id
-- status of order (active/pendding or complete)
+- status (active/pendding or complete)
 
 #### order_products
 
