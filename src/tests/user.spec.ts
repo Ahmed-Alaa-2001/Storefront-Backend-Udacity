@@ -40,7 +40,7 @@ describe('User Model', () => {
 
         beforeAll(async () => {
             const connection = await db.connect();
-            const sql = `DELETE FROM users
+            const sql = `DELETE FROM users;
                         ALTER SEQUENCE users_id_seq RESTART WITH 1;
             `;
             await connection.query(sql);
@@ -62,45 +62,45 @@ describe('User Model', () => {
         it('Index method should return All available users in DB', async () => {
         const users = await userModel.showAll();
             expect(users.length).toBe(1);
-            expect(users[0].user_name).toBe('testUser');
+            expect(users[0].user_name).toBe('User');
         });
         
         it('Show method should return testUser when called with ID (1)', async () => {
         const returnedUser = await userModel.showByID(1);
             expect(returnedUser.id).toBe(1);
-            expect(returnedUser.email).toBe('test@test.com');
-            expect(returnedUser.user_name).toBe('testUser');
-            expect(returnedUser.first_name).toBe('Test');
-            expect(returnedUser.last_name).toBe('User');
+            expect(returnedUser.email).toBe('tt@gmail.com');
+            expect(returnedUser.user_name).toBe('User');
+            expect(returnedUser.first_name).toBe('User');
+            expect(returnedUser.last_name).toBe('Test');
         });
         
         it('Edit method should return a user with edited attributes', async () => {
         const updatedUser = await userModel.edit({
             id: 1,
-            email: 'mo@mo.com',
-            user_name: 'mohammedelzanaty',
-            first_name: 'Mohammed',
-            last_name: 'Elzanaty',
+            email: 'ahmed.com',
+            user_name: 'ahmedalaa',
+            first_name: 'aa',
+            last_name: 'al',
             password: 'test123'
         });
-            expect(updatedUser.email).toBe('mo@mo.com');
-            expect(updatedUser.user_name).toBe('mohammedelzanaty');
-            expect(updatedUser.first_name).toBe('Mohammed');
-            expect(updatedUser.last_name).toBe('Elzanaty');
+            expect(updatedUser.email).toBe('ahmed.com');
+            expect(updatedUser.user_name).toBe('ahmedalaa');
+            expect(updatedUser.first_name).toBe('aa');
+            expect(updatedUser.last_name).toBe('al');
         });
         
         it('Authenticate method should return the authenticated user', async () => {
-        const authenticatedUser = await userModel.login('mohammedelzanaty', 'test123');
+        const authenticatedUser = await userModel.login('ahmedalaa', 'test123');
         if (authenticatedUser) {
-                expect(authenticatedUser.email).toBe('mo@mo.com');
-                expect(authenticatedUser.user_name).toBe('mohammedelzanaty');
-                expect(authenticatedUser.first_name).toBe('Mohammed');
-                expect(authenticatedUser.last_name).toBe('Elzanaty');
+                expect(authenticatedUser.email).toBe('ahmed.com');
+                expect(authenticatedUser.user_name).toBe('ahmedalaa');
+                expect(authenticatedUser.first_name).toBe('aa');
+                expect(authenticatedUser.last_name).toBe('al');
         }
         });
         
         it('Authenticate method should return null for wrong credentials', async () => {
-        const authenticatedUser = await userModel.login('mohammedelzanaty', 'fakeuser');
+        const authenticatedUser = await userModel.login('ahmedalaa', 'fakeuser');
             expect(authenticatedUser).toBe(null);
         });
         

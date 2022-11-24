@@ -1,18 +1,15 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var CreateController_1 = __importDefault(require("../../controllers/OrderControllers/CreateController"));
-var ShowAllController_1 = __importDefault(require("../../controllers/OrderControllers/ShowAllController"));
-var ShowOneController_1 = __importDefault(require("../../controllers/OrderControllers/ShowOneController"));
-var DeleteOneController_1 = __importDefault(require("../../controllers/OrderControllers/DeleteOneController"));
-var EditController_1 = __importDefault(require("../../controllers/OrderControllers/EditController"));
+var OrderControllers_1 = require("../../controllers/OrderControllers");
+var OrderControllers_2 = require("../../controllers/OrderControllers");
+var OrderControllers_3 = require("../../controllers/OrderControllers");
+var OrderControllers_4 = require("../../controllers/OrderControllers");
+var OrderControllers_5 = require("../../controllers/OrderControllers");
 var router = (0, express_1.Router)();
-router.post('/add', CreateController_1.default);
-router.get('/showall', ShowAllController_1.default);
-router.get('/show/:id', ShowOneController_1.default);
-router.delete('/delete/:id', DeleteOneController_1.default);
-router.patch('/edit/:id', EditController_1.default);
+router.post('/add', OrderControllers_1.CreateController);
+router.get('/showall', OrderControllers_2.ShowAllController);
+router.get('/show/:id', OrderControllers_3.ShowOneController);
+router.delete('/delete/:id', OrderControllers_4.DeleteOneController);
+router.patch('/edit/:id', OrderControllers_5.EditController);
 exports.default = router;

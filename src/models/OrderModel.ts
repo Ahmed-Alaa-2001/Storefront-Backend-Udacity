@@ -64,6 +64,8 @@ export class OrderModel{
             const res = await connect.query(sql, [order.userId, order.status]);
             
             const ret = res.rows[0];
+            console.log(res.rows[0]);
+            console.log(444444);
             connect.release();
             return {
                 id: ret.id,

@@ -1,87 +1,99 @@
-import { Product, ProductModel } from '../models/ProductModel';
 import db from '../database';
+import { User, UserModel } from '../models/UserModel';
+import { Product, ProductModel } from '../models/ProductModel';
+import { Order, OrderModel } from '../models/OrderModel';
+import { OrderProduct, OrderProductModel } from '../models/OrderProductModel';
 
+const userModel = new UserModel();
 const productModel = new ProductModel();
+const orderModel = new OrderModel();
+const orderProductModel = new OrderProductModel();
 
-describe('Product Model', () => {
+describe('Order Product Model', () => {
     describe('Test methods exist', () => {
-        it('should have an createNewProduct method', () => {
-        expect(productModel.createNewProduct).toBeDefined();
-        });
-
-        it('should have a showByID method', () => {
-        expect(productModel.showByID).toBeDefined();
-        });
-        it('should have a showAll method', () => {
-        expect(productModel.showAll).toBeDefined();
-        });
         
-        it('should have a edit method', () => {
-        expect(productModel.edit).toBeDefined();
+        it('delete method', () => {
+            expect(orderProductModel.delete).toBeDefined();
+        });
+        it('showProduct method', () => {
+            expect(orderProductModel.showProduct).toBeDefined();
         });
 
-        it('should have a deleteAll method', () => {
-        expect(productModel.deleteAll).toBeDefined();
+        it(' create method', () => {
+            expect(orderProductModel.create).toBeDefined();
         });
-        it('should have a deleteById method', () => {
-        expect(productModel.deleteById).toBeDefined();
+        it('should have an showallProducts method', () => {
+            expect(orderProductModel.showallProducts).toBeDefined();
         });
+
     });
 
-    describe('Test Model logic', () => {
+    describe('Test Order Products Model logic', () => {
+        const user = {
+            email: 'test@test.com',
+            user_name: 'testUser',
+            first_name: 'Test',
+            last_name: 'User',
+            password: 'test123'
+        } as User;
         const product = {
             name: 'product name',
             description: 'product description',
-            price: 200,
+            price: 9.99,
             category: 'Electronics.'
         } as Product;
+            const order = {
+            userId: 1,
+            status: 'active'
+        } as Order;
+        const orderProduct = {
+            quantity: 1,
+            order_id: 1,
+            product_id: 1
+        } as OrderProduct;
 
+        
         afterAll(async () => {
-        const connection = await db.connect();
-        const sql = 'DELETE FROM products;\n ALTER SEQUENCE products_id_seq RESTART WITH 1;\n';
-        await connection.query(sql);
-        connection.release();
+            const connection = await db.connect();
+            const sql =
+                `DELETE FROM order_products;
+                ALTER SEQUENCE order_products_id_seq RESTART WITH 1;
+                DELETE FROM orders;ALTER SEQUENCE orders_id_seq RESTART WITH 1;
+                DELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1;
+                DELETE FROM users;
+                ALTER SEQUENCE users_id_seq RESTART WITH 1`;
+            await connection.query(sql);
+            connection.release();
+        });
+        beforeAll(async () => {
+            await userModel.createNewUser(user);
+            await productModel.createNewProduct(product);
+            await orderModel.create(order);
         });
 
-        it('add  product', async () => {
-        const p = await productModel.createNewProduct(product);
-        expect(p).toEqual({
-            ...product,
-            id: p.id,
-            price: p.price
-        });
-        });
-        it('return the correct product', async () => {
-        const rp = await productModel.showByID(1);
-        expect(rp).toEqual({
-            ...product,
-            id: 1,
-            price: rp.price
-        });
+        it('Create method should return an order product', async () => {
+        const createdOrderProduct = await orderProductModel.create(orderProduct);
+        expect(createdOrderProduct.quantity).toBe(1);
         });
 
-        it('return a list of products', async () => {
-        const p = await productModel.showAll();
-        expect(p.length).toBe(1);
-        expect(p[0].name).toBe('product name');
+        it('Edit method should return a order with edited properties', async () => {
+            const eOP = await orderProductModel.edit({
+                id: 1,
+                quantity: 10,
+                order_id: 1,
+                product_id: 1
+            });
+            it('Show method should return the correct product in a specific order', async () => {
+                const tOD = await orderProductModel.showProduct(1, 1);
+                expect(tOD.quantity).toBe(1);
+            });
+
+            expect(eOP.quantity).toEqual(10);
         });
 
-
-        it('Edit method should return a product with edited attributes', async () => {
-        const rp = await productModel.edit({
-            id: 1,
-            name: 'product name edited',
-            description: 'product description edited',
-            price: 10,
-            category: 'Electronics.'
-        });
-        expect(rp.name).toBe('product name edited');
-        expect(rp.description).toBe('product description edited');
-        });
-
-        it('Delete method should remove the product', async () => {
-        const deletedProduct = await productModel.deleteById(1);
-        expect(deletedProduct.id).toBe(1);
+        it('Delete method should remove products from list of product in order', async () => {
+            const dOP = await orderProductModel.delete(1, 1);
+            expect(dOP.id).toBe(1);
         });
     });
 });

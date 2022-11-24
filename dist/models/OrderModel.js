@@ -44,18 +44,6 @@ var database_1 = __importDefault(require("../database"));
 var OrderModel = (function () {
     function OrderModel() {
     }
-    OrderModel.prototype.formatOrder = function (order) {
-        var _a;
-        return {
-            id: order.id,
-            status: order.status,
-            userId: +order.user_id,
-            userName: order.user_name,
-            products: Array.isArray(order.products) && order.products.length > 0 && ((_a = order.products[0]) === null || _a === void 0 ? void 0 : _a.quantity)
-                ? order.products
-                : []
-        };
-    };
     OrderModel.prototype.showAll = function () {
         return __awaiter(this, void 0, void 0, function () {
             var connect, sql, res, err_1;
@@ -95,7 +83,7 @@ var OrderModel = (function () {
                     case 2:
                         res = _a.sent();
                         connect.release();
-                        return [2, this.formatOrder(res.rows[0])];
+                        return [2, res.rows[0]];
                     case 3:
                         err_2 = _a.sent();
                         throw new Error("Could not find product ".concat(id, ", ").concat(err_2.message));
@@ -119,6 +107,8 @@ var OrderModel = (function () {
                     case 2:
                         res = _a.sent();
                         ret = res.rows[0];
+                        console.log(res.rows[0]);
+                        console.log(444444);
                         connect.release();
                         return [2, {
                                 id: ret.id,

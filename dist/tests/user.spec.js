@@ -81,7 +81,7 @@ describe('User Model', function () {
                     case 0: return [4, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        sql = "DELETE FROM users";
+                        sql = "DELETE FROM users;\n                        ALTER SEQUENCE users_id_seq RESTART WITH 1;\n            ";
                         return [4, connection.query(sql)];
                     case 2:
                         _a.sent();
@@ -104,6 +104,98 @@ describe('User Model', function () {
                             first_name: 'User',
                             last_name: 'Test',
                         });
+                        return [2];
+                }
+            });
+        }); });
+        it('Index method should return All available users in DB', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var users;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.showAll()];
+                    case 1:
+                        users = _a.sent();
+                        expect(users.length).toBe(1);
+                        expect(users[0].user_name).toBe('User');
+                        return [2];
+                }
+            });
+        }); });
+        it('Show method should return testUser when called with ID (1)', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var returnedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.showByID(1)];
+                    case 1:
+                        returnedUser = _a.sent();
+                        expect(returnedUser.id).toBe(1);
+                        expect(returnedUser.email).toBe('tt@gmail.com');
+                        expect(returnedUser.user_name).toBe('User');
+                        expect(returnedUser.first_name).toBe('User');
+                        expect(returnedUser.last_name).toBe('Test');
+                        return [2];
+                }
+            });
+        }); });
+        it('Edit method should return a user with edited attributes', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var updatedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.edit({
+                            id: 1,
+                            email: 'ahmed.com',
+                            user_name: 'ahmedalaa',
+                            first_name: 'aa',
+                            last_name: 'al',
+                            password: 'test123'
+                        })];
+                    case 1:
+                        updatedUser = _a.sent();
+                        expect(updatedUser.email).toBe('ahmed.com');
+                        expect(updatedUser.user_name).toBe('ahmedalaa');
+                        expect(updatedUser.first_name).toBe('aa');
+                        expect(updatedUser.last_name).toBe('al');
+                        return [2];
+                }
+            });
+        }); });
+        it('Authenticate method should return the authenticated user', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var authenticatedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.login('ahmedalaa', 'test123')];
+                    case 1:
+                        authenticatedUser = _a.sent();
+                        if (authenticatedUser) {
+                            expect(authenticatedUser.email).toBe('ahmed.com');
+                            expect(authenticatedUser.user_name).toBe('ahmedalaa');
+                            expect(authenticatedUser.first_name).toBe('aa');
+                            expect(authenticatedUser.last_name).toBe('al');
+                        }
+                        return [2];
+                }
+            });
+        }); });
+        it('Authenticate method should return null for wrong credentials', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var authenticatedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.login('ahmedalaa', 'fakeuser')];
+                    case 1:
+                        authenticatedUser = _a.sent();
+                        expect(authenticatedUser).toBe(null);
+                        return [2];
+                }
+            });
+        }); });
+        it('Delete method should delete user from DB', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var deletedUser;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, userModel.deleteById(1)];
+                    case 1:
+                        deletedUser = _a.sent();
+                        expect(deletedUser.id).toBe(1);
                         return [2];
                 }
             });
