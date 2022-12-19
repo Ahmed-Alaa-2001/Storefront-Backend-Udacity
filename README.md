@@ -35,6 +35,15 @@ DB_DATABASE=storefront_dev
 DB_DATABASE_TEST=storefront_test
 DB_USER=AhmedAlaa
 DB_PASS=ahmed
+................
+Next, start the Postgres server
+
+- Login to Postgres
+  - `psql -U postgres`
+- create database storefront_dev
+  - `CREATEDB storefront_dev`
+- run the database migrations
+  - `db-migration up`
 
 # user
 
@@ -69,7 +78,10 @@ The application will run on <http://localhost:3000/>.
 
 Use the following command to run the unit tests:
 
+- create database storefront_dev
+  - `CREATEDB storefront_test`
 ```bash
+npm run test-reset
 npm run test
 ```
 

@@ -34,6 +34,7 @@ describe('Order Model', () => {
             category: 'Electronics.'
         } as Product;
         const user = {
+            id:1,
             email: 'test@test.com',
             user_name: 'testUser',
             first_name: 'Test',
@@ -46,16 +47,19 @@ describe('Order Model', () => {
         } as Order;
         afterAll(async () => {
             const connection = await db.connect();
-            const sql =`deleteById FROM users;
+            const sql =`delete FROM users;
                         ALTER SEQUENCE users_id_seq RESTART WITH 1;
-                        deleteById FROM products;
-                        ALTER SEQUENCE products_id_seq RESTART WITH 1;\ndeleteById FROM orders;
+                        delete FROM products;
+                        ALTER SEQUENCE products_id_seq RESTART WITH 1;
+                        delete FROM orders;
                         ALTER SEQUENCE orders_id_seq RESTART WITH 1;`;
-            await connection.query(sql);
-            connection.release();
-        });
+                        await connection.query(sql);
+                        connection.release();
+                    });
         beforeAll(async () => {
             await userModel.createNewUser(user);
+            console.log(user.id);
+            // console.log(33333333333333333333333333);
             await productModel.createNewProduct(product);
         });
         it('should add an order', async () => {

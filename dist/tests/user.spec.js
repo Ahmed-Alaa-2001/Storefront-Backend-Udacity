@@ -41,7 +41,104 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var UserModel_1 = require("../models/UserModel");
 var database_1 = __importDefault(require("../database"));
+var supertest_1 = __importDefault(require("supertest"));
+var index_1 = __importDefault(require("../index"));
+var request = (0, supertest_1.default)(index_1.default);
 var userModel = new UserModel_1.UserModel();
+var token = '';
+describe('test users endpoints ', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        user = {
+                            id: 1,
+                            email: 'ahmed@gmail.com',
+                            user_name: 'ahmed',
+                            first_name: 'ahmed',
+                            last_name: 'alaa',
+                            password: '1234'
+                        };
+                        return [4, userModel.createNewUser(user)];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        }); });
+        afterAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+            var connection, sql;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, database_1.default.connect()];
+                    case 1:
+                        connection = _a.sent();
+                        sql = "DELETE FROM users;\n                    ALTER SEQUENCE users_id_seq RESTART WITH 1;\n        ";
+                        return [4, connection.query(sql)];
+                    case 2:
+                        _a.sent();
+                        connection.release();
+                        return [2];
+                }
+            });
+        }); });
+        user = {
+            id: 2,
+            email: 'tt@gmail.com',
+            user_name: 'User',
+            first_name: 'User',
+            last_name: 'Test',
+            password: '1234'
+        };
+        it('test /api/users/signup endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request.post('/api/users/signup').send(user)];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('test /api/users/login endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response, userToken;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request.post('/api/users/login').set('Content-type', 'application/json').send({
+                            user_name: 'User',
+                            password: '1234'
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        userToken = response.body.data.token;
+                        token = userToken;
+                        return [2];
+                }
+            });
+        }); });
+        it('test /api/users/showall endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request.get('/api/users/showall')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        return [2];
+    });
+}); });
 describe('User Model', function () {
     describe('Test methods exist', function () {
         it('should have a createNewUser method to add new users', function () {

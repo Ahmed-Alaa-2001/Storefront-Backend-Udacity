@@ -39,10 +39,10 @@ describe('Order Product Model', () => {
         const product = {
             name: 'product name',
             description: 'product description',
-            price: 9.99,
+            price: 20,
             category: 'Electronics.'
         } as Product;
-            const order = {
+        const order = {
             userId: 1,
             status: 'active'
         } as Order;
@@ -76,16 +76,17 @@ describe('Order Product Model', () => {
         expect(createdOrderProduct.quantity).toBe(1);
         });
 
+        it('Show method should return the correct product in a specific order', async () => {
+            const tOD = await orderProductModel.showProduct(1, 1);
+            expect(tOD.quantity).toBe(1);
+        });
+        
         it('Edit method should return a order with edited properties', async () => {
             const eOP = await orderProductModel.edit({
                 id: 1,
                 quantity: 10,
                 order_id: 1,
                 product_id: 1
-            });
-            it('Show method should return the correct product in a specific order', async () => {
-                const tOD = await orderProductModel.showProduct(1, 1);
-                expect(tOD.quantity).toBe(1);
             });
 
             expect(eOP.quantity).toEqual(10);

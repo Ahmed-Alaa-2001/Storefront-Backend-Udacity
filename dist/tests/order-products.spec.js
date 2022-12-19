@@ -74,7 +74,7 @@ describe('Order Product Model', function () {
         var product = {
             name: 'product name',
             description: 'product description',
-            price: 9.99,
+            price: 20,
             category: 'Electronics.'
         };
         var order = {
@@ -130,6 +130,18 @@ describe('Order Product Model', function () {
                 }
             });
         }); });
+        it('Show method should return the correct product in a specific order', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var tOD;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, orderProductModel.showProduct(1, 1)];
+                    case 1:
+                        tOD = _a.sent();
+                        expect(tOD.quantity).toBe(1);
+                        return [2];
+                }
+            });
+        }); });
         it('Edit method should return a order with edited properties', function () { return __awaiter(void 0, void 0, void 0, function () {
             var eOP;
             return __generator(this, function (_a) {
@@ -142,18 +154,6 @@ describe('Order Product Model', function () {
                         })];
                     case 1:
                         eOP = _a.sent();
-                        it('Show method should return the correct product in a specific order', function () { return __awaiter(void 0, void 0, void 0, function () {
-                            var tOD;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4, orderProductModel.showProduct(1, 1)];
-                                    case 1:
-                                        tOD = _a.sent();
-                                        expect(tOD.quantity).toBe(1);
-                                        return [2];
-                                }
-                            });
-                        }); });
                         expect(eOP.quantity).toEqual(10);
                         return [2];
                 }

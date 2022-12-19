@@ -1,7 +1,65 @@
 import { User, UserModel } from '../models/UserModel';
 import db from '../database';
+import supertest from 'supertest'
+import app from '../index'
 
+const request = supertest(app)
 const userModel = new UserModel();
+let token: string = '';
+describe('test users endpoints ', async () => {
+    beforeAll(async () => {
+        const user = {
+            id:1,
+            email: 'ahmed@gmail.com',
+            user_name: 'ahmed',
+            first_name: 'ahmed',
+            last_name: 'alaa',
+            password: '1234'
+        } as User;
+    
+        await userModel.createNewUser(user);
+    });
+    afterAll(async () => {
+        const connection = await db.connect();
+        const sql = `DELETE FROM users;
+                    ALTER SEQUENCE users_id_seq RESTART WITH 1;
+        `;
+        await connection.query(sql);
+        connection.release();
+    });
+    const user = {
+        id:2,
+        email: 'tt@gmail.com',
+        user_name: 'User',
+        first_name: 'User',
+        last_name: 'Test',
+        password: '1234'
+    } as User;
+    // const res = await request.post('/api/users/login').send(user);
+    // expect(res.status).toBe(200);
+    // const token = res.body;
+    it('test /api/users/signup endpoint', async () => {
+        const response = await request.post('/api/users/signup').send(user);
+        expect(response.status).toBe(200)
+    })
+    it('test /api/users/login endpoint', async () => {
+        const response = await request.post('/api/users/login').set('Content-type', 'application/json').send({
+            user_name: 'User',
+            password: '1234'
+        });
+        expect(response.status).toBe(200);
+        // console.log(response.body.data);        
+        const { token: userToken } = response.body.data;
+        token = userToken;
+    })
+    it('test /api/users/showall endpoint', async () => {
+        const response = await request.get('/api/users/showall')
+        .set('Content-type', 'application/json')
+        .set('Authorization', `Bearer ${token}`)
+        expect(response.status).toBe(200)
+    })
+});
+
 
 describe('User Model', () => {
     describe('Test methods exist', () => {

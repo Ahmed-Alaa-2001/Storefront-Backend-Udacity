@@ -16,7 +16,7 @@ const {
 export const salt = SALT;
 export const pepper = PEPPER;
 let client: Pool = new Pool();
-
+console.log(NODE_ENV);
 if (NODE_ENV == 'dev') {
     client = new Pool({
         host: PG_HOST,

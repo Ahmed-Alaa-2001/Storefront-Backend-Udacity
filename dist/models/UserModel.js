@@ -74,7 +74,7 @@ var UserModel = (function () {
                         return [4, database_1.default.connect()];
                     case 1:
                         connect = _a.sent();
-                        sql = 'INSERT INTO users (email,user_name,first_name,last_name,password) VALUES ($1,$2,$3,$4,$5) returning id, email, user_name, first_name, last_name';
+                        sql = 'INSERT INTO users (email,user_name,first_name,last_name,password) VALUES ($1,$2,$3,$4,$5) returning id, email, user_name, first_name, last_name;';
                         hashPassword = bcrypt_1.default.hashSync(user.password + database_1.pepper, parseInt(database_1.salt));
                         return [4, connect.query(sql, [
                                 user.email,

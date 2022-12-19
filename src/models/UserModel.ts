@@ -13,7 +13,7 @@ export class UserModel {
     async createNewUser(user: User): Promise<User>{
         try {
             const connect = await db.connect();
-            const sql = 'INSERT INTO users (email,user_name,first_name,last_name,password) VALUES ($1,$2,$3,$4,$5) returning id, email, user_name, first_name, last_name';
+            const sql = 'INSERT INTO users (email,user_name,first_name,last_name,password) VALUES ($1,$2,$3,$4,$5) returning id, email, user_name, first_name, last_name;';
             const hashPassword = bcrypt.hashSync(user.password + pepper, parseInt(salt as string));
             const result = await connect.query(sql, [
                 user.email,

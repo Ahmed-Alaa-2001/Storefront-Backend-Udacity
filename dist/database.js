@@ -11,6 +11,7 @@ var _a = process.env, PG_HOST = _a.PG_HOST, PG_DB = _a.PG_DB, PG_USER = _a.PG_US
 exports.salt = SALT;
 exports.pepper = PEPPER;
 var client = new pg_1.Pool();
+console.log(NODE_ENV);
 if (NODE_ENV == 'dev') {
     client = new pg_1.Pool({
         host: PG_HOST,

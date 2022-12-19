@@ -102,13 +102,15 @@ var OrderModel = (function () {
                         return [4, database_1.default.connect()];
                     case 1:
                         connect = _a.sent();
+                        console.log(order);
+                        console.log(444444);
                         sql = 'INSERT INTO orders (user_id, status) values ($1, $2) RETURNING *';
                         return [4, connect.query(sql, [order.userId, order.status])];
                     case 2:
                         res = _a.sent();
+                        console.log(order);
                         ret = res.rows[0];
                         console.log(res.rows[0]);
-                        console.log(444444);
                         connect.release();
                         return [2, {
                                 id: ret.id,

@@ -95,7 +95,10 @@ var postLogIn = function (req, res, next) { return __awaiter(void 0, void 0, voi
                 user = _a.sent();
                 if (user) {
                     token = jsonwebtoken_1.default.sign({ user: user }, secretToken);
-                    res.json(token);
+                    return [2, res.json({
+                            data: { token: token },
+                            message: 'user authenticated successfully'
+                        })];
                 }
                 else {
                     res.sendStatus(401);

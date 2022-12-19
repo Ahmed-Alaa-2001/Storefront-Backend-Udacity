@@ -60,12 +60,14 @@ export class OrderModel{
     async create(order: Order): Promise<Order> {
         try {
             const connect = await db.connect();
+            console.log(order);
+            console.log(444444);
             const sql = 'INSERT INTO orders (user_id, status) values ($1, $2) RETURNING *';
             const res = await connect.query(sql, [order.userId, order.status]);
+            console.log(order);
             
             const ret = res.rows[0];
             console.log(res.rows[0]);
-            console.log(444444);
             connect.release();
             return {
                 id: ret.id,

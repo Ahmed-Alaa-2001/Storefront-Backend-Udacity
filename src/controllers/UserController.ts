@@ -29,11 +29,11 @@ export const postLogIn = async (req: Request, res: Response,next: NextFunction) 
         // console.log(user);
         if (user) {
             const token = jwt.sign({ user }, secretToken as string);
-            // return res.json({
-            //     data: { ...user, token },
-            //     message: 'user authenticated successfully'
-            // });
-            res.json(token);
+            return res.json({
+                data: {  token },
+                message: 'user authenticated successfully'
+            });
+            // res.json(token);
         }
         else {
             res.sendStatus(401)
