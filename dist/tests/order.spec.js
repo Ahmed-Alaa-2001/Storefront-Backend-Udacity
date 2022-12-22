@@ -43,9 +43,138 @@ var database_1 = __importDefault(require("../database"));
 var UserModel_1 = require("../models/UserModel");
 var ProductModel_1 = require("../models/ProductModel");
 var OrderModel_1 = require("../models/OrderModel");
+var supertest_1 = __importDefault(require("supertest"));
+var index_1 = __importDefault(require("../index"));
+var token = '';
+var request = (0, supertest_1.default)(index_1.default);
 var userModel = new UserModel_1.UserModel();
 var productModel = new ProductModel_1.ProductModel();
 var orderModel = new OrderModel_1.OrderModel();
+describe('test Order endpoints', function () {
+    beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var user;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    user = {
+                        email: 'ahmed1@gmail.com',
+                        user_name: 'ahmed1',
+                        first_name: 'ahmed',
+                        last_name: 'alaa',
+                        password: '1234'
+                    };
+                    return [4, userModel.createNewUser(user)];
+                case 1:
+                    _a.sent();
+                    return [2];
+            }
+        });
+    }); });
+    afterAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var connection, sql;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, database_1.default.connect()];
+                case 1:
+                    connection = _a.sent();
+                    sql = "delete FROM orders;\n                    ALTER SEQUENCE orders_id_seq RESTART WITH 1;\n                    delete FROM users;\n                    ALTER SEQUENCE users_id_seq RESTART WITH 1;";
+                    return [4, connection.query(sql)];
+                case 2:
+                    _a.sent();
+                    connection.release();
+                    return [2];
+            }
+        });
+    }); });
+    describe('Test Login method', function () {
+        it('get token', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response, userToken;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .post('/api/users/login')
+                            .set('Content-type', 'application/json')
+                            .send({
+                            user_name: 'ahmed1',
+                            password: '1234'
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        userToken = response.body.data.token;
+                        token = userToken;
+                        return [2];
+                }
+            });
+        }); });
+    });
+    describe('Test Order CRUD Endpoints', function () {
+        it('create new order', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .post('/api/orders/add/')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send({
+                            id: 1,
+                            user_id: 1,
+                            status: 'active'
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('swow all orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .get('/api/orders/showall/')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('show specific order by id', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .get('/api/orders/show/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('delete specific order by id', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .delete('/api/orders/delete/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        response = _a.sent();
+                        expect(response.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+    });
+});
 describe('Order Model', function () {
     describe('Test methods exist', function () {
         it('should have an showAll method', function () {
@@ -70,11 +199,11 @@ describe('Order Model', function () {
         };
         var user = {
             id: 1,
-            email: 'test@test.com',
-            user_name: 'testUser',
-            first_name: 'Test',
-            last_name: 'User',
-            password: 'test123'
+            email: 'ahmed@gmail.com',
+            user_name: 'ahmed',
+            first_name: 'ahmed',
+            last_name: 'alaa',
+            password: '1234'
         };
         var order = {
             userId: 1,

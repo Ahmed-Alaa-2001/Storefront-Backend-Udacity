@@ -94,7 +94,7 @@ var OrderModel = (function () {
     };
     OrderModel.prototype.create = function (order) {
         return __awaiter(this, void 0, void 0, function () {
-            var connect, sql, res, ret, err_3;
+            var connect, userr, sql, res, ret, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -102,14 +102,20 @@ var OrderModel = (function () {
                         return [4, database_1.default.connect()];
                     case 1:
                         connect = _a.sent();
-                        console.log(order);
-                        console.log(444444);
+                        userr = void 0;
+                        if (order.userId !== undefined) {
+                            userr = order.userId;
+                        }
+                        else {
+                            userr = order.user_id;
+                        }
+                        console.log(userr);
                         sql = 'INSERT INTO orders (user_id, status) values ($1, $2) RETURNING *';
-                        return [4, connect.query(sql, [order.userId, order.status])];
+                        return [4, connect.query(sql, [userr, order.status])];
                     case 2:
                         res = _a.sent();
-                        console.log(order);
                         ret = res.rows[0];
+                        console.log('oooooo0000000000oo');
                         console.log(res.rows[0]);
                         connect.release();
                         return [2, {

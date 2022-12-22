@@ -86,6 +86,7 @@ var UserModel = (function () {
                     case 2:
                         result = _a.sent();
                         connect.release();
+                        console.log('uuuuuuuuuuuuuuuuuuuuuu');
                         console.log(result.rows[0]);
                         return [2, result.rows[0]];
                     case 3:
@@ -149,7 +150,6 @@ var UserModel = (function () {
                             ])];
                     case 2:
                         result = _a.sent();
-                        console.log(result.rows[0]);
                         connection.release();
                         return [2, result.rows[0]];
                     case 3:

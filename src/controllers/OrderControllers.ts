@@ -29,6 +29,10 @@ export const DeleteOneController = async (req: Request, res: Response,next:NextF
 
 export const  EditController = async (req: Request, res: Response,next:NextFunction) => {
     try {
+        // console.log(11111111111);
+        
+        // console.log(req.body);
+        
         const order = await orderModel.edit(req.body);
         res.json({
             message: 'Order updated successfully',

@@ -171,7 +171,6 @@ var EditController = function (req, res, next) { return __awaiter(void 0, void 0
                 return [4, userModel.edit(req.body)];
             case 1:
                 user = _a.sent();
-                console.log(req);
                 res.json({
                     status: 'success',
                     message: 'user updated successfully',

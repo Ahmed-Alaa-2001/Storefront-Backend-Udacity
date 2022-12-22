@@ -9,7 +9,7 @@ const request = supertest(app)
 const userModel = new UserModel();
 let token: string = '';
 
-describe('test some product endpoints', () => {
+describe('test products endpoints', () => {
     beforeAll(async () => {
         const user = {
             id:1,
@@ -48,7 +48,7 @@ describe('test some product endpoints', () => {
         });
     });
     
-    describe('test products endpoints', () => {
+    describe('test products CURD endpoints', () => {
         it('should create new product', async () => {
             const response = await request
             .post('/api/products/add')

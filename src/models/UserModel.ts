@@ -23,7 +23,8 @@ export class UserModel {
                 hashPassword,
             ])
             connect.release();
-            console.log(result.rows[0]);
+            // console.log('uuuuuuuuuuuuuuuuuuuuuu');
+            // console.log(result.rows[0]);
             return result.rows[0];
         } catch (err) {
             throw new Error(`can't create (${user.user_name}): ${err.message}`);
@@ -62,7 +63,7 @@ export class UserModel {
                 hashPassword,
                 user.id
             ])
-            console.log(result.rows[0]);
+            // console.log(result.rows[0]);
             connection.release();
             return result.rows[0];
         } catch (err) {

@@ -2,10 +2,95 @@ import db from '../database';
 import { User, UserModel } from '../models/UserModel';
 import { Product, ProductModel } from '../models/ProductModel';
 import { Order, OrderModel } from '../models/OrderModel';
+import supertest from 'supertest'
+import app from '../index'
+let token: string = '';
+
+const request = supertest(app);
 
 const userModel = new UserModel();
 const productModel = new ProductModel();
 const orderModel = new OrderModel();
+
+describe('test Order endpoints', () => {
+    beforeAll(async () => {
+        const user = {
+            email: 'ahmed1@gmail.com',
+            user_name: 'ahmed1',
+            first_name: 'ahmed',
+            last_name: 'alaa',
+            password: '1234'
+        } as User;
+
+    await userModel.createNewUser(user);
+});
+
+    afterAll(async () => {
+        const connection = await db.connect();
+        const sql =`delete FROM orders;
+                    ALTER SEQUENCE orders_id_seq RESTART WITH 1;
+                    delete FROM users;
+                    ALTER SEQUENCE users_id_seq RESTART WITH 1;`;
+        await connection.query(sql);
+        connection.release();
+    });
+
+    describe('Test Login method', () => {
+        it('get token', async () => {
+            const response = await request
+                .post('/api/users/login')
+                .set('Content-type', 'application/json')
+                .send({
+                    user_name: 'ahmed1',
+                    password: '1234'
+                });
+            // console.log(response.body.data);
+            
+            const { token: userToken } = response.body.data;
+            token = userToken;
+        });
+    });
+
+    describe('Test Order CRUD Endpoints', () => {
+        it('create new order', async () => {
+            const response = await request
+                .post('/api/orders/add/')
+                .set('Content-type', 'application/json')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    id: 1,
+                    user_id: 1,
+                    status: 'active'
+                });            
+            expect(response.status).toBe(200);
+    });
+
+        it('swow all orders', async () => {
+            const response = await request
+                .get('/api/orders/showall/')
+                .set('Content-type', 'application/json')
+                .set('Authorization', `Bearer ${token}`);
+            expect(response.status).toBe(200);
+        });
+
+        it('show specific order by id', async () => {
+            const response = await request
+                .get('/api/orders/show/1')
+                .set('Content-type', 'application/json')
+                .set('Authorization', `Bearer ${token}`);
+            expect(response.status).toBe(200);
+        });
+
+        it('delete specific order by id', async () => {
+            const response = await request
+                .delete('/api/orders/delete/1')
+                .set('Content-type', 'application/json')
+                .set('Authorization', `Bearer ${token}`);
+            expect(response.status).toBe(200);
+        });
+    });
+});
+
 
 describe('Order Model', () => {
     describe('Test methods exist', () => {
@@ -35,11 +120,11 @@ describe('Order Model', () => {
         } as Product;
         const user = {
             id:1,
-            email: 'test@test.com',
-            user_name: 'testUser',
-            first_name: 'Test',
-            last_name: 'User',
-            password: 'test123'
+            email: 'ahmed@gmail.com',
+            user_name: 'ahmed',
+            first_name: 'ahmed',
+            last_name: 'alaa',
+            password: '1234'
         } as User;
         const order = {
             userId: 1,

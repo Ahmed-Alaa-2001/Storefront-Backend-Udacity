@@ -59,7 +59,7 @@ var productModel = new ProductModel_1.ProductModel();
 var request = (0, supertest_1.default)(index_1.default);
 var userModel = new UserModel_1.UserModel();
 var token = '';
-describe('test some product endpoints', function () {
+describe('test products endpoints', function () {
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
         var user;
         return __generator(this, function (_a) {
@@ -118,7 +118,7 @@ describe('test some product endpoints', function () {
             });
         }); });
     });
-    describe('test products endpoints', function () {
+    describe('test products CURD endpoints', function () {
         it('should create new product', function () { return __awaiter(void 0, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {

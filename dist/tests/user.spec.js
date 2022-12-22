@@ -136,6 +136,59 @@ describe('test users endpoints ', function () { return __awaiter(void 0, void 0,
                 }
             });
         }); });
+        it('test /api/users/deleteall endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .delete('/api/users/deleteall')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('test /api/users/delete/:id endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .delete('/api/users/delete/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('should update user info', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .patch('/api/users/edit/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send({
+                            id: 1,
+                            email: 'mm@gmail.com',
+                            userName: 'mm',
+                            firstName: 'mm',
+                            lastName: 'mm',
+                            password: '123456'
+                        })];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
         return [2];
     });
 }); });

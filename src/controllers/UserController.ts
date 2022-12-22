@@ -74,7 +74,7 @@ export const DeleteOneController = async (req: Request, res: Response,next:NextF
 export const EditController = async (req: Request, res: Response,next:NextFunction) => {
     try {
         const user:User = await userModel.edit(req.body);
-        console.log(req);
+        // console.log(req);
         res.json({
             status: 'success',
             message: 'user updated successfully',

@@ -56,6 +56,7 @@ var CreateController = function (req, res, next) { return __awaiter(void 0, void
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                console.log(req.body);
                 return [4, orderModel.create(req.body)];
             case 1:
                 order = _a.sent();
@@ -102,6 +103,8 @@ var EditController = function (req, res, next) { return __awaiter(void 0, void 0
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
+                console.log(11111111111);
+                console.log(req.body);
                 return [4, orderModel.edit(req.body)];
             case 1:
                 order = _a.sent();

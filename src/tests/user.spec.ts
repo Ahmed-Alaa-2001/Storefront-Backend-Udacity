@@ -58,6 +58,35 @@ describe('test users endpoints ', async () => {
         .set('Authorization', `Bearer ${token}`)
         expect(response.status).toBe(200)
     })
+    it('test /api/users/deleteall endpoint', async () => {
+        const res = await request
+            .delete('/api/users/deleteall')
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`);
+            expect(res.status).toBe(200);
+    });
+    it('test /api/users/delete/:id endpoint', async () => {
+        const res = await request
+            .delete('/api/users/delete/1')
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`);
+            expect(res.status).toBe(200);
+    });
+    it('should update user info', async () => {
+        const res = await request
+            .patch('/api/users/edit/1')
+            .set('Content-type', 'application/json')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                id: 1,
+                email: 'mm@gmail.com',
+                userName: 'mm',
+                firstName: 'mm',
+                lastName: 'mm',
+                password: '123456'
+            });
+        expect(res.status).toBe(200);
+    });
 });
 
 

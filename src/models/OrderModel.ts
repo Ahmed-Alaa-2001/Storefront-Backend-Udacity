@@ -20,6 +20,7 @@ export type Order = {
     status: string;
     userName?: string;
     products?: OrderProduct[];
+    user_id?: number;
 };
 
 export class OrderModel{
@@ -60,13 +61,20 @@ export class OrderModel{
     async create(order: Order): Promise<Order> {
         try {
             const connect = await db.connect();
-            console.log(order);
-            console.log(444444);
+            let userr;
+            if (order.userId !== undefined) {
+                userr = order.userId;
+            }
+            else {
+                userr = order.user_id;
+            }
+            console.log(userr);
             const sql = 'INSERT INTO orders (user_id, status) values ($1, $2) RETURNING *';
-            const res = await connect.query(sql, [order.userId, order.status]);
-            console.log(order);
+            const res = await connect.query(sql, [userr, order.status]);
+            // console.log(order);
             
             const ret = res.rows[0];
+            console.log('oooooo0000000000oo');
             console.log(res.rows[0]);
             connect.release();
             return {
@@ -95,7 +103,7 @@ export class OrderModel{
         }
     }
     async edit(order: Order): Promise<Order> {
-        try {
+        try {            
             const connect = await db.connect();
             const sql = 'UPDATE orders SET user_id=$1, status=$2 WHERE id=$3 RETURNING *';
             const res = await connect.query(sql, [order.userId, order.status, order.id]);

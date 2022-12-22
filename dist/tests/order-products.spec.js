@@ -44,10 +44,179 @@ var UserModel_1 = require("../models/UserModel");
 var ProductModel_1 = require("../models/ProductModel");
 var OrderModel_1 = require("../models/OrderModel");
 var OrderProductModel_1 = require("../models/OrderProductModel");
+var supertest_1 = __importDefault(require("supertest"));
+var index_1 = __importDefault(require("../index"));
+var token = '';
+var request = (0, supertest_1.default)(index_1.default);
 var userModel = new UserModel_1.UserModel();
 var productModel = new ProductModel_1.ProductModel();
 var orderModel = new OrderModel_1.OrderModel();
 var orderProductModel = new OrderProductModel_1.OrderProductModel();
+describe('test Order Product endpoints', function () {
+    var user = {
+        email: 'ahmed1@gmail.com',
+        user_name: 'ahmed1',
+        first_name: 'ahmed',
+        last_name: 'alaa',
+        password: '1234'
+    };
+    var product = {
+        name: 'product name',
+        description: 'product description',
+        price: 20,
+        category: 'Electronics.'
+    };
+    var order = {
+        userId: 1,
+        status: 'active'
+    };
+    var orderProduct = {
+        quantity: 1,
+        order_id: 1,
+        product_id: 1
+    };
+    beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, userModel.createNewUser(user)];
+                case 1:
+                    _a.sent();
+                    return [4, productModel.createNewProduct(product)];
+                case 2:
+                    _a.sent();
+                    return [4, orderModel.create(order)];
+                case 3:
+                    _a.sent();
+                    return [2];
+            }
+        });
+    }); });
+    afterAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var connection, sql;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, database_1.default.connect()];
+                case 1:
+                    connection = _a.sent();
+                    sql = "DELETE FROM order_products;\n                    ALTER SEQUENCE order_products_id_seq RESTART WITH 1;\n                    DELETE FROM orders;\n                    ALTER SEQUENCE orders_id_seq RESTART WITH 1;\n                    DELETE FROM products;\n                    ALTER SEQUENCE products_id_seq RESTART WITH 1;\n                    DELETE FROM users;\n                    ALTER SEQUENCE users_id_seq RESTART WITH 1";
+                    return [4, connection.query(sql)];
+                case 2:
+                    _a.sent();
+                    connection.release();
+                    return [2];
+            }
+        });
+    }); });
+    describe('Test Login method', function () {
+        it('get token', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response, userToken;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .post('/api/users/login')
+                            .set('Content-type', 'application/json')
+                            .send({
+                            user_name: 'ahmed1',
+                            password: '1234'
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        userToken = response.body.data.token;
+                        token = userToken;
+                        return [2];
+                }
+            });
+        }); });
+    });
+    describe('Test Order Product CRUD Endpoints', function () {
+        it('create new order product', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .post('/api/orders-products/add/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send(orderProduct)];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('show specific order', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .get('/api/orders-products/show/1/products/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('show all orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .get('/api/orders-products/showall/1/products')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('update order product info', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .patch('/api/orders-products/edit/1/products/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send({
+                            id: 1,
+                            product_id: 1,
+                            order_id: 1,
+                            quantity: 4
+                        })];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+        it('delete order', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, request
+                            .delete('/api/orders-products/delete/1/products/1')
+                            .set('Content-type', 'application/json')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send({
+                            productId: 1,
+                            orderId: 1
+                        })];
+                    case 1:
+                        res = _a.sent();
+                        expect(res.status).toBe(200);
+                        return [2];
+                }
+            });
+        }); });
+    });
+});
 describe('Order Product Model', function () {
     describe('Test methods exist', function () {
         it('delete method', function () {

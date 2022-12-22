@@ -35,7 +35,7 @@ export class ProductModel {
                 product.category,
                 product.id
             ])
-            console.log(result.rows[0]);
+            // console.log(result.rows[0]);
             connection.release();
             return result.rows[0];
         } catch (err) {

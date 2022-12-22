@@ -130,7 +130,6 @@ var EditController = function (req, res, next) { return __awaiter(void 0, void 0
                 return [4, productModel.edit(req.body)];
             case 1:
                 product = _a.sent();
-                console.log(req.body);
                 res.json({
                     status: 'success',
                     message: 'product updated successfully',
